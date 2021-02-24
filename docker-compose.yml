@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  ldap:
+    build:
+        context: ./server
+        dockerfile: Dockerfile
+    image: testldap:latest
+    privileged: true
+
+  testbox:
+    build:
+        context: ./client
+        dockerfile: Dockerfile
+    image: testclient:latest
+    depends_on:
+    - ldap
+    links:
+    - ldap:ldap
+
